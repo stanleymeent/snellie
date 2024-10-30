@@ -1,0 +1,77 @@
+[tool.poetry]
+name = "snellie"
+version = "0.1.0"
+description = "snellie"
+authors = [
+  "Stanley van de Meent <stanleymeent@gmail.com>",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+
+[tool.poetry.group.dev.dependencies]
+types-requests = "^2.32.0.20241016"
+
+[build-system]
+requires = ["poetry==1.8.3", "poeblix==0.10.0"]
+build-backend = "lock_build"
+backend-path = ["build"]
+
+line-length = 140
+indent-width = 4
+
+target-version = "py310"
+
+
+[tool.ruff.lint]
+select = ["ALL"]
+# Set all issues to ignore for now; can be resolved one by one in smaller PRs
+ignore = [
+  "ANN101",  # missing-type-sel: deprecated rule
+  "ANN102",  # missing-type-cls: deprecated rule
+  "COM812",  # missing-trailing-comma: overzealous
+  "D100",    # undocumented-public-module: overzealous
+  "D104",    # undocumented-public-package: overzealous
+  "D105",    # undocumented-magic-method: overzealous
+  "D106",    # undocumented-public-nested-class: overzealous
+  "D107",    # undocumented-public-init: overzealous
+  "D203",    # one-blank-line-before-class: overzealous
+  "D213",    # multi-line-summary-second-line: Conflicts with D211
+  "D401",    # non-imperative-mood: overzealous
+  "D404",    # docstring-starts-with-this: overzealous
+  "D406",    # new-line-after-section-name: inconsistent
+  "D407",    # dashed-underline-after-section: unneeded
+  "D413",    # blank-line-after-last-section: unneeded
+  "EM",      # flake8-errmsg: overzealous
+  "ERA001",  # commented-out-code
+  "EXE001",  # shebang-not-executable
+  "EXE002",  # no-shebang-present
+  "F403",    # undefined-local-with-import-star
+  "FBT",     # flake8-boolean-trap
+  "FIX",     # flake8-fixme
+  "INP001",  # implicit-namespace-package: missing __init__ in dev scripts
+  "ISC001",  # single-line-implicit-string-concatenation; recommended to be disabled
+  "N803",    # invalid-argument-name
+  "N806",    # non-lowercase-variable-in-function
+  "PD002",   # avoid using inplace: overzealous
+  "PD009",   # prefer .iloc to .iat: overzealous
+  "PD013",   # prefer .melt over .stack: overzealous
+  "PD901",   # avoid using df for DataFrames: overzealous
+  "PLR2004", # magic-value-comparison
+  "PT011",   # pytest-raises-too-broad: overzealous
+  "S101",    # assert: overzealous
+  "S301",    # suspicious-pickle-usage
+  "TD",      # flake8-todos: overzealous
+  "TRY003",  # raise-vanilla-args: overzealous
+  "UP032",   # f-string: prefer format call to break up long lines
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
