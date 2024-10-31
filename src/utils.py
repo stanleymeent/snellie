@@ -4,10 +4,10 @@ from collections.abc import Callable
 from functools import wraps
 from typing import Any, TypeVar, cast
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 F = TypeVar("F", bound=Callable[..., Any])
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def timeit(func: F) -> F:
