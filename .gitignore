@@ -10,6 +10,8 @@ node_modules
 *.xlsx
 *.lip
 data/
+config/
+dev/
 
 # C extensions
 *.so
