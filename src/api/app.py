@@ -1,19 +1,15 @@
-import os
-
 import httpx
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles
 
 from src.api.auth import get_current_user
 from src.api.common.exceptions import raise_http_exception
 from src.api.common.predict import get_items_prediction
+from src.api.config import settings
 from src.api.schemas import OCRSource, PredictionOutput
 from src.api.tags import tags_metadata
-from src.config import settings
-from src.utils import logger
+from src.api.utils.time_decorator import logger
 
 load_dotenv()
 
@@ -32,8 +28,6 @@ app.add_middleware(
     allow_methods=settings.ALLOWED_METHODS,
     allow_headers=settings.ALLOWED_HEADERS,
 )
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.post("/predict-items", tags=["receipt-predictions"], status_code=status.HTTP_200_OK, dependencies=[Depends(get_current_user)])
@@ -72,21 +66,7 @@ async def predict(
         )
 
 
-@app.get("/favicon.ico", include_in_schema=False)
-async def favicon() -> RedirectResponse:
-    """Redirect to the favicon."""
-    return RedirectResponse(url="static/favicon.ico")
-
-
 @app.get("/")
 async def root() -> dict:
     """Root endpoint."""
     return {"message": "Welcome to Snellie API!"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    port = int(os.environ["PORT"])
-    logger.info(f"Running API on port: {port}")
-    uvicorn.run("app:app", host="127.0.0.1", port=port, reload=True)

@@ -8,7 +8,7 @@ from fastapi import UploadFile, status
 
 from src.api.common.exceptions import raise_http_exception
 from src.api.schemas import OCRSource, PredictionOutput
-from src.utils import timeit
+from src.api.utils.time_decorator import timeit
 
 
 async def get_items_prediction(file: UploadFile, prediction_source: str) -> PredictionOutput:

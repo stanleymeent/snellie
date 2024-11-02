@@ -12,4 +12,10 @@ api:
 	uvicorn src.api.app:app --reload --port 8000
 
 token:
-	python -m http.server 8011 & sleep 1 && open http://localhost:8011/dev/firebase_token.html
+	python -m http.server 8012 & sleep 1 && open http://localhost:8012/dev/firebase_token.html
+
+docker-build:
+	docker build -t app .
+
+docker-run:
+	docker run --env-file .env -p 8000:8000 app

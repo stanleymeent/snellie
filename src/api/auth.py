@@ -2,7 +2,7 @@ from fastapi import Depends, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from src.api.common.exceptions import AuthorizationError
-from src.services.firebase_service import FirebaseService
+from src.api.services.firebase_service import FirebaseService
 
 firebase_service = FirebaseService()
 security = HTTPBearer(

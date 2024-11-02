@@ -11,7 +11,6 @@ load_dotenv()
 class Settings(BaseSettings):
     """Application configuration settings."""
 
-    FIREBASE_CREDENTIALS_PATH: str = os.environ["FIREBASE_CREDENTIALS_PATH"]
     FIREBASE_PROJECT_ID: str = os.environ["FIREBASE_PROJECT_ID"]
 
     APP_NAME: str = "snellie"
