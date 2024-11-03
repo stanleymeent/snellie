@@ -27,6 +27,11 @@ class Settings(BaseSettings):
     ENABLE_SWAGGER: bool = True
     ENABLE_METRICS: bool = True
 
+    AWS_ACCESS_KEY_ID: str = os.environ["AWS_ACCESS_KEY_ID"]
+    AWS_SECRET_ACCESS_KEY: str = os.environ["AWS_SECRET_ACCESS_KEY"]
+    AWS_S3_BUCKET_NAME: str = os.environ["AWS_S3_BUCKET_NAME"]
+    AWS_REGION: str = os.environ["AWS_REGION"]
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", frozen=True)
 
 

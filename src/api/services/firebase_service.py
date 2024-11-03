@@ -6,7 +6,7 @@ from firebase_admin import auth, credentials
 
 from src.api.common.exceptions import AuthenticationError
 from src.api.config import settings
-from src.api.utils.time_decorator import logger
+from src.api.utils.custom_logging import logger
 
 
 class FirebaseService:

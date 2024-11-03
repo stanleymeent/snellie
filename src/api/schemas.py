@@ -21,4 +21,4 @@ class PredictionOutput(BaseModel):
     image_id: ImageID
     line_items: list[dict[str, Any]]
     total_amount: float
-    brand_name: str | None
+    brand_name: str | None = None

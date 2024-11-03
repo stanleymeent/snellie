@@ -8,8 +8,9 @@ from src.api.common.exceptions import raise_http_exception
 from src.api.common.predict import get_items_prediction
 from src.api.config import settings
 from src.api.schemas import OCRSource, PredictionOutput
+from src.api.services.s3_service import save_to_s3
 from src.api.tags import tags_metadata
-from src.api.utils.time_decorator import logger
+from src.api.utils.custom_logging import logger
 
 load_dotenv()
 
@@ -33,7 +34,7 @@ app.add_middleware(
 @app.post("/predict-items", tags=["receipt-predictions"], status_code=status.HTTP_200_OK, dependencies=[Depends(get_current_user)])
 async def predict(
     file: UploadFile,
-    prediction_source: str = OCRSource.KLIPPA,
+    prediction_source: str = OCRSource.ASPRISE,
     current_user: dict = Depends(get_current_user),  # noqa: B008
 ) -> PredictionOutput:
     """Predict items from a receipt image."""
@@ -44,7 +45,10 @@ async def predict(
         if not file.content_type.startswith("image/"):
             raise_http_exception(status_code=status.HTTP_400_BAD_REQUEST, detail="File must be an image")
 
-        return await get_items_prediction(file=file, prediction_source=prediction_source)
+        prediction = await get_items_prediction(file=file, prediction_source=prediction_source)
+
+        save_to_s3(file=file, prediction=prediction)
+        return prediction  # noqa: TRY300
 
     except httpx.TimeoutException:
         logger.error("Timeout while calling prediction service")
