@@ -5,4 +5,4 @@ services:
     ports:
       - "8013:8013"
     volumes:
-      - .:/app
+      - /volume2/docker/snellie/data:/app
