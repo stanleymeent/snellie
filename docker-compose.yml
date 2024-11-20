@@ -3,6 +3,6 @@ services:
     build: .
     container_name: snellie_app
     ports:
-      - "8001:8000"
+      - "8013:8013"
     volumes:
       - .:/app
