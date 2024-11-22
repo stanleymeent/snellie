@@ -1,9 +1,8 @@
 import httpx
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, UploadFile, status
+from fastapi import FastAPI, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.auth import get_current_user
 from src.api.common.exceptions import raise_http_exception
 from src.api.common.predict import get_items_prediction
 from src.api.config import settings
@@ -31,17 +30,13 @@ app.add_middleware(
 )
 
 
-@app.post("/predict-items", tags=["receipt-predictions"], status_code=status.HTTP_200_OK, dependencies=[Depends(get_current_user)])
+@app.post("/predict-items", tags=["receipt-predictions"], status_code=status.HTTP_200_OK)
 async def predict(
     file: UploadFile,
     prediction_source: str = OCRSource.ASPRISE,
-    current_user: dict = Depends(get_current_user),  # noqa: B008
 ) -> PredictionOutput:
     """Predict items from a receipt image."""
     try:
-        user_id = current_user["uid"]
-        logger.info("Prediction request %s", user_id)
-
         if not file.content_type.startswith("image/"):
             raise_http_exception(status_code=status.HTTP_400_BAD_REQUEST, detail="File must be an image")
 
