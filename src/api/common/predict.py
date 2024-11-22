@@ -35,7 +35,7 @@ async def run_asprise_prediction(file: UploadFile) -> PredictionOutput:
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            os.environ["ASPRISE_API_URL"],
+            "https://ocr.asprise.com/api/v1/receipt",
             data={
                 "client_id": "TEST",
                 "recognizer": "auto",
