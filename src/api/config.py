@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     APP_DESCRIPTION: str = "secure receipt prediction microservice"
     APP_VERSION: str = "0.1.0"
 
-    ALLOWED_ORIGINS: list[str] = ["http://localhost:8001"]
+    ALLOWED_ORIGINS: list[str] = ["https://localhost:8013"]
     ALLOWED_METHODS: list[str] = ["*"]
     ALLOWED_HEADERS: list[str] = ["*"]
 
