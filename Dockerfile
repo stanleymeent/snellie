@@ -10,7 +10,7 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 
 COPY src/ src/
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app/src
 
 EXPOSE 8013
 
