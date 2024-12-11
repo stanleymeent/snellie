@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import io
 import os
 
@@ -73,12 +74,15 @@ async def run_klippa_prediction(file: UploadFile) -> PredictionOutput:
         PredictionOutput: The receipt data.
     """
     contents = await file.read()
-    image_file = io.BytesIO(contents)
+
+    base64_data = base64.b64encode(contents).decode("ascii")
 
     async with httpx.AsyncClient() as client:
+        payload = {"documents": [{"content_type": "image/jpeg", "data": base64_data}]}
         response = await client.post(
             os.environ["KLIPPA_API_URL"],
-            files={"receiptpicture": image_file},
+            headers={"x-api-key": os.environ["KLIPPA_API_KEY"], "Content-Type": "application/json"},
+            json=payload,
             timeout=10,
         )
         if response.status_code != 200:
