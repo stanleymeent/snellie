@@ -33,7 +33,7 @@ app.add_middleware(
 @app.post("/predict-items", tags=["receipt-predictions"], status_code=status.HTTP_200_OK)
 async def predict(
     file: UploadFile,
-    prediction_source: str = OCRSource.ASPRISE,
+    prediction_source: str = OCRSource.KLIPPA,
 ) -> PredictionOutput:
     """Predict items from a receipt image."""
     try:
