@@ -78,7 +78,7 @@ async def run_klippa_prediction(file: UploadFile) -> PredictionOutput:
     base64_data = base64.b64encode(contents).decode("ascii")
 
     async with httpx.AsyncClient() as client:
-        payload = {"documents": [{"content_type": "image/jpeg", "data": base64_data}]}
+        payload = {"preset": {"slug": "snellie"}, "documents": [{"data": base64_data}]}
         response = await client.post(
             os.environ["KLIPPA_API_URL"],
             headers={"x-api-key": os.environ["KLIPPA_API_KEY"], "Content-Type": "application/json"},
@@ -90,7 +90,7 @@ async def run_klippa_prediction(file: UploadFile) -> PredictionOutput:
                 status_code=status.HTTP_502_BAD_GATEWAY,
                 detail=f"{OCRSource.KLIPPA.name} prediction service failed to process the image",
             )
-        response_output = response.json()["components"]
+        response_output = response.json()["data"]["components"]
 
     if len(response_output["line_items"]) > 1 or len(response_output["line_items"]["line_item_sections"]) > 1:
         raise ValueError("More than one receipt found in the image")
