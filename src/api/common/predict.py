@@ -80,7 +80,7 @@ async def run_klippa_prediction(file: UploadFile) -> PredictionOutput:
     async with httpx.AsyncClient() as client:
         payload = {"preset": {"slug": "snellie"}, "documents": [{"data": base64_data}]}
         response = await client.post(
-            os.environ["KLIPPA_API_URL"],
+            os.getenv("KLIPPA_API_URL", "https://dochorizon.klippa.com/api/services/document_capturing/v1/financial"),
             headers={"x-api-key": os.environ["KLIPPA_API_KEY"], "Content-Type": "application/json"},
             json=payload,
             timeout=10,
