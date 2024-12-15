@@ -61,7 +61,7 @@ async def predict(
         logger.error(f"Unexpected error: {e!s}")
         raise_http_exception(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
+            detail=f"Internal server error: {e!s}",
         )
 
 
